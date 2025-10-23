@@ -183,16 +183,72 @@
   document.querySelector('#lastUpdate time').textContent = new Intl.DateTimeFormat('es-BO', {dateStyle:'medium', timeStyle:'short'}).format(new Date());
 })();
 </script>
-    <!-- Pie de página personalizado -->
- <footer style="position: fixed; bottom: 20px; right: 20px; text-align: center;">
-  <div style="color: white; font-weight: 600; font-size: 14px; margin-bottom: 6px;">
-    Empresa al servicio de:
+  <!-- PIE DE PÁGINA PERSONALIZADO -->
+<footer class="footer-servicio">
+  <div class="footer-texto">Empresa al servicio de:</div>
+  <div class="footer-logo">
+    <img src="Asset/WhatsApp Image 2025-10-23 at 9.22.57 AM.jpeg" 
+         alt="Logo cliente">
   </div>
+</footer>
 
-  <div style="width: 100px; height: 56px; background: white; border-radius: 10px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-    <img src="Asset/WhatsApp Image 2025-10-23 at 9.22.57 AM.jpeg"
-         alt="Logo cliente"
-         style="max-width: 90%; max-height: 90%; object-fit: contain;">
+<style>
+  .footer-servicio {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    z-index: 999;
+  }
+
+  .footer-texto {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .footer-logo {
+  width: 140px;   /* antes 100px */
+  height: 78px;   /* antes 56px */
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-logo img {
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: contain;
+  }
+</style>
+}
+
+
+  /* 📱 Ajustes para pantallas pequeñas (celulares) */
+  @media (max-width: 600px) {
+    .footer-servicio {
+      position: static;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    .footer-logo {
+  width: 140px;
+  height: 78px;
+}
+
+    }
+    .footer-texto {
+      font-size: 13px;
+    }
+  }
+</style>
+
   </div>
 </footer>
 
