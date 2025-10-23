@@ -75,9 +75,10 @@
         </div>
         <div class="fields">
           <div class="row"><div class="label">Nombre</div><div class="value" id="name">Edwin Jhaune Rojas</div></div>
-          <div class="row"><div class="label">Cargo</div><div class="value" id="Identify">8741425</div></div>
+          <div class="row"><div class="label">Carnet de Identidad</div><div class="value" id="Identify">8741425</div></div>
           <div class="row"><div class="label">Cargo</div><div class="value" id="role">Técnico de relevamiento</div></div>
-          <div class="row"><div class="label">Orden</div><div class="value" id="Service">ELFEC</div></div>
+          <div class="row"><div class="label">Empresa</div><div class="value" id="Service">GreenTech</div></div>
+          <div class="row"><div class="label">Tercializa</div><div class="value" id="Service">ELFEC</div></div>
           <div class="row"><div class="label">Actividad</div><div class="value" id="activity">Relevamiento de postes eléctricos</div></div>
           <div class="row"><div class="label">Zona</div><div class="value" id="zone">Provincia Chapare</div></div>
           <div class="row"><div class="label">Vigencia</div><div class="value" id="valid">25/10/2025 – 31/12/2025</div></div>
@@ -182,5 +183,13 @@
   document.querySelector('#lastUpdate time').textContent = new Intl.DateTimeFormat('es-BO', {dateStyle:'medium', timeStyle:'short'}).format(new Date());
 })();
 </script>
+    <!-- Pie de página personalizado -->
+  <footer style="position: fixed; bottom: 20px; right: 20px; text-align: center;">
+    <div style="color: white; font-weight: 600; font-size: 14px; margin-bottom: 6px;">
+      Empresa al servicio de:
+    </div>
+    <div style="width: 100px; height: 56px; background: white; border-radius: 10px; border: 1px solid #ccc;"></div>
+  </footer>
+
 </body>
 </html>
