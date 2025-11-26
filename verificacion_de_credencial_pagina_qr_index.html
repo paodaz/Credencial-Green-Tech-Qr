@@ -1,184 +1,308 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Verificación de credencial — Green Tech</title>
-  <meta name="description" content="Página de verificación de credencial para personal autorizado en campo." />
-  <style>
-    :root{
-      --bg:#0f172a; /* slate-900 */
-      --card:#111827; /* gray-900 */
-      --text:#e5e7eb; /* gray-200 */
-      --muted:#9ca3af; /* gray-400 */
-      --accent:#22c55e; /* green-500 */
-      --danger:#ef4444; /* red-500 */
-      --link:#60a5fa; /* blue-400 */
-      --shadow: 0 20px 45px rgba(0,0,0,.45);
-      --radius: 20px;
-    }
-    html,body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;margin:0}
-    .wrap{max-width:840px;margin:24px auto;padding:24px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-    header{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter: blur(2px)}
-    header img.logo{width:56px;height:56px;object-fit:contain;border-radius:12px;background:#fff;padding:6px}
-    header .hgroup{display:flex;flex-direction:column}
-    header .hgroup h1{font-size:20px;margin:0;letter-spacing:.2px}
-    header .hgroup span{color:var(--muted);font-size:13px}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verificación de credencial — Green Tech</title>
+  <meta name="description" content="Página de verificación de credencial para personal autorizado en campo." />
+  <style>
+    :root{
+      --bg:#0f172a; /* slate-900 */
+      --card:#111827; /* gray-900 */
+      --text:#e5e7eb; /* gray-200 */
+      --muted:#9ca3af; /* gray-400 */
+      --accent:#22c55e; /* green-500 */
+      --danger:#ef4444; /* red-500 */
+      --link:#60a5fa; /* blue-400 */
+      --shadow: 0 20px 45px rgba(0,0,0,.45);
+      --radius: 20px;
+    }
+    html,body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;margin:0}
+    .wrap{max-width:840px;margin:24px auto;padding:24px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    header{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter: blur(2px)}
+    header img.logo{width:56px;height:56px;object-fit:contain;border-radius:12px;background:#fff;padding:6px}
+    header .hgroup{display:flex;flex-direction:column}
+    header .hgroup h1{font-size:20px;margin:0;letter-spacing:.2px}
+    header .hgroup span{color:var(--muted);font-size:13px}
 
-    .content{display:grid;grid-template-columns: 180px 1fr;gap:18px;padding:20px}
-    .avatar{display:flex;align-items:center;justify-content:center}
-    .avatar img{width:160px;height:160px;border-radius:16px;object-fit:cover;border:2px solid rgba(255,255,255,.15);background:#0b1020}
+    .content{display:grid;grid-template-columns: 180px 1fr;gap:18px;padding:20px}
+    .avatar{display:flex;align-items:center;justify-content:center}
+    .avatar img{width:160px;height:160px;border-radius:16px;object-fit:cover;border:2px solid rgba(255,255,255,.15);background:#0b1020}
 
-    .fields{display:grid;gap:10px}
-    .row{display:grid;grid-template-columns: 180px 1fr;gap:10px;align-items:center}
-    .label{color:var(--muted);font-size:13px}
-    .value{font-weight:600}
+    .fields{display:grid;gap:10px}
+    .row{display:grid;grid-template-columns: 180px 1fr;gap:10px;align-items:center}
+    .label{color:var(--muted);font-size:13px}
+    .value{font-weight:600}
 
-    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-    .badge{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12)}
-    .ok{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.35)}
-    .warn{background:rgba(234,179,8,.12);border-color:rgba(234,179,8,.35)}
+    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .badge{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12)}
+    .ok{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.35)}
+    .warn{background:rgba(234,179,8,.12);border-color:rgba(234,179,8,.35)}
+    .error{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.35)} /* Nuevo para error */
 
-    .actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 20px 22px}
-    .btn{appearance:none;border:1px solid rgba(255,255,255,.14);background:#0b1224;color:var(--text);padding:12px 14px;border-radius:12px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-    .btn.primary{border-color:rgba(34,197,94,.45);background:linear-gradient(180deg, rgba(34,197,94,.25), rgba(34,197,94,.15))}
-    .btn.link{border-color:rgba(96,165,250,.45);background:linear-gradient(180deg, rgba(96,165,250,.25), rgba(96,165,250,.12))}
-    .btn.danger{border-color:rgba(239,68,68,.45);background:linear-gradient(180deg, rgba(239,68,68,.25), rgba(239,68,68,.12))}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 20px 22px}
+    .btn{appearance:none;border:1px solid rgba(255,255,255,.14);background:#0b1224;color:var(--text);padding:12px 14px;border-radius:12px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+    .btn.primary{border-color:rgba(34,197,94,.45);background:linear-gradient(180deg, rgba(34,197,94,.25), rgba(34,197,94,.15))}
+    .btn.link{border-color:rgba(96,165,250,.45);background:linear-gradient(180deg, rgba(96,165,250,.25), rgba(96,165,250,.12))}
+    .btn.danger{border-color:rgba(239,68,68,.45);background:linear-gradient(180deg, rgba(239,68,68,.25), rgba(239,68,68,.12))}
 
-    footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 
-    .note{background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.15);padding:12px 14px;border-radius:12px;margin:0 20px 18px;color:var(--muted);font-size:13px}
-    .tel{font-variant-numeric:tabular-nums}
+    .note{background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.15);padding:12px 14px;border-radius:12px;margin:0 20px 18px;color:var(--muted);font-size:13px}
+    .tel{font-variant-numeric:tabular-nums}
+    /* Estilos para el estado NO ENCONTRADO */
+    .not-found .content, .not-found .actions { display: none; }
+    .not-found .hgroup h1::after { content: ' - NO ENCONTRADO'; color: var(--danger); }
+    .not-found .note { margin-bottom: 0; }
 
-    @media (max-width:720px){
-      .content{grid-template-columns: 1fr}
-      .row{grid-template-columns: 1fr}
-      header img.logo{width:46px;height:46px}
-    }
-  </style>
+    @media (max-width:720px){
+      .content{grid-template-columns: 1fr}
+      .row{grid-template-columns: 1fr}
+      header img.logo{width:46px;height:46px}
+    }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card" role="document" aria-label="Página de verificación de credencial">
-      <header>
-        <img class="logo" id="logo" alt="Logo" src="" onerror="this.style.display='none'" />
-        <div class="hgroup">
-          <h1>VERIFICACIÓN DE CREDENCIAL EMPRESA GREEN TECH</h1>
-          <span id="company">GREEN TECH</span>
-        </div>
-      </header>
+  <div class="wrap">
+    <div class="card" role="document" aria-label="Página de verificación de credencial" id="credentialCard">
+      <header>
+        <img class="logo" id="logo" alt="Logo" src="" onerror="this.style.display='none'" />
+        <div class="hgroup">
+          <h1>VERIFICACIÓN DE CREDENCIAL EMPRESA GREEN TECH</h1>
+          <span id="company">GREEN TECH</span>
+        </div>
+      </header>
 
-      <div class="content">
-        <div class="avatar">
-          <img id="photo" alt="Foto del trabajador" src="https://github.com/paodaz/Credencial-Green-Tech-Qr/blob/main/Asset/GREENTECH%20LOGO.png"; this.style.display='none'">
-        </div>
-        <div class="fields">
-          <div class="row"><div class="label">Nombre</div><div class="value" id="name">Edwin Jhaune Rojas</div></div>
-          <div class="row"><div class="label">Cargo</div><div class="value" id="role">Técnico de relevamiento</div></div>
-          <div class="row"><div class="label">CI</div><div class="value" id="order">8741425</div></div>
-          <div class="row"><div class="label">Actividad</div><div class="value" id="activity">Relevamiento de postes eléctricos GREEN TECH-ELFEC</div></div>
-          <div class="row"><div class="label">Zona</div><div class="value" id="zone">Provincia Chapare</div></div>
-          <div class="row"><div class="label">Vigencia</div><div class="value" id="valid">15/10/2025 – 31/12/2025</div></div>
-          <div class="row"><div class="label">Supervisor</div><div class="value" id="supervisor">Ing. Miguel Angel Soria C.</div></div>
-          <div class="row"><div class="label">Teléfono supervisor</div><div class="value tel" id="phone">+59165757126</div></div>
-          <div class="row"><div class="label">Código de verificación</div><div class="value" id="code">GT-CH-1</div></div>
+      <div class="content">
+        <div class="avatar">
+          <img id="photo" alt="Foto del trabajador" src="https://github.com/paodaz/Credencial-Green-Tech-Qr/blob/main/Asset/GREENTECH%20LOGO.png" onerror="this.src='https://via.placeholder.com/160x160.png?text=Sin+Foto';">
+        </div>
+        <div class="fields">
+          <div class="row"><div class="label">Nombre</div><div class="value" id="name"></div></div>
+          <div class="row"><div class="label">Cargo</div><div class="value" id="role"></div></div>
+          <div class="row"><div class="label">CI</div><div class="value" id="order"></div></div>
+          <div class="row"><div class="label">Actividad</div><div class="value" id="activity"></div></div>
+          <div class="row"><div class="label">Zona</div><div class="value" id="zone"></div></div>
+          <div class="row"><div class="label">Vigencia</div><div class="value" id="valid"></div></div>
+          <div class="row"><div class="label">Supervisor</div><div class="value" id="supervisor"></div></div>
+          <div class="row"><div class="label">Teléfono supervisor</div><div class="value tel" id="phone"></div></div>
+          <div class="row"><div class="label">Código de verificación</div><div class="value" id="code"></div></div>
 
-          <div class="badges" id="badges">
-            <div class="badge ok" id="statusBadge">Credencial válida</div>
-            <div class="badge" id="dateBadge">Emitida: 15/10/2025</div>
-          </div>
-        </div>
-      </div>
+          <div class="badges" id="badges">
+            <div class="badge ok" id="statusBadge"></div>
+            <div class="badge" id="dateBadge"></div>
+          </div>
+        </div>
+      </div>
 
-      <p class="note" id="note">Si necesita confirmación inmediata, puede llamar al supervisor o solicitar una videollamada para verificar identidad y equipo en sitio.</p>
+      <p class="note" id="note">Si necesita confirmación inmediata, puede llamar al supervisor o solicitar una videollamada para verificar identidad y equipo en sitio.</p>
 
-      <div class="actions">
-        <a class="btn primary" id="callBtn" href="#">📞 Llamar al supervisor</a>
-        <a class="btn link" id="permitBtn" href="#" target="_blank" rel="noopener">📄 Ver permiso</a>
-        <button class="btn" id="shareBtn" type="button">🔗 Compartir esta verificación</button>
-        <a class="btn danger" id="emergencyBtn" href="#">🚨 Emergencia</a>
-      </div>
+      <div class="actions">
+        <a class="btn primary" id="callBtn" href="#">📞 Llamar al supervisor</a>
+        <a class="btn link" id="permitBtn" href="#" target="_blank" rel="noopener">📄 Ver permiso</a>
+        <button class="btn" id="shareBtn" type="button">🔗 Compartir esta verificación</button>
+        <a class="btn danger" id="emergencyBtn" href="#">🚨 Emergencia</a>
+      </div>
 
-      <footer>
-        <span id="footerValid">Válido únicamente durante el periodo indicado.</span>
-        <span id="lastUpdate">Última actualización:25/10/25 <time></time></span>
-      </footer>
-    </div>
-  </div>
+      <footer>
+        <span id="footerValid">Válido únicamente durante el periodo indicado.</span>
+        <span id="lastUpdate">Última actualización: <time></time></span>
+      </footer>
+    </div>
+  </div>
 
 <script>
+/**
+ * 💡 LISTA DE TRABAJADORES
+ * Para añadir más trabajadores, simplemente agrega nuevos objetos a este array.
+ * El campo clave para la verificación es 'code'.
+ * Los campos de fecha (valid_from, valid_to, issued) deben ser en formato YYYY-MM-DD
+ * para que JavaScript los interprete correctamente (por ejemplo, '2025-10-15').
+ */
+const WORKERS = [
+  {
+    // Tu trabajador original
+    code: 'GT-999-01',
+    name: 'Edwin Jhaune Rojas',
+    role: 'Técnico de relevamiento',
+    order: '8741425', // CI
+    activity: 'Relevamiento de postes eléctricos GREEN TECH-ELFEC',
+    zone: 'Provincia Chapare',
+    valid_from: '2025-10-15', // Importante: Formato YYYY-MM-DD
+    valid_to: '2025-12-31',   // Importante: Formato YYYY-MM-DD
+    supervisor: 'Ing. Miguel Angel Soria C.',
+    phone: '+59165757126',
+    issued: '2025-10-15',
+    // Opcionales
+    photo: 'https://cdn.example.com/fotos/GT-CH-1.jpg', // URL a la foto (reemplazar con la tuya)
+    permit: 'https://docs.google.com/document/d/PermisoGT-CH-1',
+    emergency: '+59165776126'
+  },
+  {
+    // Nuevo trabajador de ejemplo
+    code: 'GT-777-01',
+    name: 'Ing.Miguel Angel Soria Castellon',
+    role: 'Gerente General',
+    order: '6542556', // CI
+    activity: 'Relevamiento de postes eléctricos GREEN TECH-ELFEC',
+    zone: 'Cochabamba',
+    valid_from: '2025-11-01',
+    valid_to: '2026-03-30',
+    supervisor: 'Ing Miguel Angel Soria Castellon',
+    phone: '+59165776126',
+    issued: '2025-11-01',
+    photo: 'Asset/WhatsApp Image 2025-02-07 at 8.15.11 PM.jpeg',
+    permit: 'https://docs.google.com/document/d/PermisoGT-777-01',
+    // emergency no definido, se ocultará el botón
+  },
+  {
+    // Otro trabajador
+    code: 'GT-777-02',
+    name: 'Percy Soria Castellon',
+    role: 'Técnico Eléctrico',
+    order: '5421369', // CI
+    activity: 'Relevamiento de postes eléctricos GREEN TECH-ELFEC',
+    zone: 'Cochabamba',
+    valid_from: '2025-11-01',
+    valid_to: '2026-03-30', // Vencido para el día de hoy (25/11/2025)
+    supervisor: 'Ing. Miguel Angel Soria C.',
+    phone: '+59165776126',
+    issued: '2025-11-01',
+    photo: 'https://cdn.example.com/fotos/GT-SC-10.jpg',
+  },
+ {
+    // Otro trabajador
+    code: 'GT-888-02',
+    name: 'Cesar Flores Apaza',
+    role: 'Técnico Eléctrico',
+    order: '8721470', // CI
+    activity: 'Relevamiento de postes eléctricos GREEN TECH-ELFEC',
+    zone: 'Cochabamba',
+    valid_from: '2025-11-01',
+    valid_to: '2026-03-30', // Vencido para el día de hoy (25/11/2025)
+    supervisor: 'Ing. Miguel Angel Soria C.',
+    phone: '+59165776126',
+    issued: '2025-11-01',
+    photo: 'https://cdn.example.com/fotos/GT-SC-10.jpg',
+    },
+ {
+    // Otro trabajador
+    code: 'GT-888-01',
+    name: 'Elvis Jhosivaldo Mamani Callahuara',
+    role: 'Técnico Eléctrico',
+    order: '9515164', // CI
+    activity: 'Relevamiento de postes eléctricos GREEN TECH-ELFEC',
+    zone: 'Cochabamba',
+    valid_from: '2025-11-01',
+    valid_to: '2026-03-30', // Vencido para el día de hoy (25/11/2025)
+    supervisor: 'Ing. Miguel Angel Soria C.',
+    phone: '+59165776126',
+    issued: '2025-11-01',
+    photo: 'https://cdn.example.com/fotos/GT-SC-10.jpg', 
+];
+
+
 (function(){
-  const qs = new URLSearchParams(location.search);
-  const get = (k, def="") => (qs.get(k) ?? def).trim();
+  const qs = new URLSearchParams(location.search);
+  const getParam = (k, def="") => (qs.get(k) ?? def).trim();
+  const card = document.getElementById('credentialCard');
 
-  // Map query params → elements
-  const map = {
-    name: 'name', role: 'role', order: 'order', activity: 'activity', zone: 'zone',
-    valid: 'valid', supervisor: 'supervisor', phone: 'phone', code: 'code',
-    company: 'company', note: 'note'
-  };
+  // 1. OBTENER CÓDIGO DE VERIFICACIÓN de la URL (?code=...)
+  const verificationCode = getParam('code').toUpperCase();
+  let workerData = null;
 
-  for(const [param, id] of Object.entries(map)){
-    const v = get(param);
-    if(v){ document.getElementById(id).textContent = v; }
-  }
+  if (verificationCode) {
+    // 2. BUSCAR EL TRABAJADOR EN LA LISTA
+    workerData = WORKERS.find(w => w.code.toUpperCase() === verificationCode);
+  }
 
-  // Optional: logo, photo, permit, emergency
-  const logo = get('logo');
-  if(logo){ document.getElementById('logo').src = logo; }
+  if (!workerData) {
+    // 3. SI NO SE ENCUENTRA (o no hay código), MOSTRAR MENSAJE DE ERROR
+    card.classList.add('not-found');
+    document.getElementById('note').innerHTML = `⚠️ No se encontró la credencial con el código **${verificationCode || 'vacío'}**. Por favor, verifique el código QR o intente con otro.`;
+    document.getElementById('statusBadge').textContent = 'Código no encontrado';
+    document.getElementById('statusBadge').className = 'badge error';
+    document.getElementById('dateBadge').style.display = 'none';
+    // Ocultar botones de acción si no hay datos
+    document.querySelectorAll('.actions a, .actions button').forEach(el => el.style.display = 'none');
+    return; // Detener la ejecución del script
+  }
 
-  const photo = get('photo');
-  if(photo){ document.getElementById('photo').src = photo; }
+  // 4. MAPEO DE DATOS ENCONTRADOS a elementos del DOM
+  const map = {
+    name: 'name', role: 'role', order: 'order', activity: 'activity', zone: 'zone',
+    supervisor: 'supervisor', phone: 'phone', code: 'code',
+    company: 'company', note: 'note'
+  };
 
-  const permit = get('permit');
-  const permitBtn = document.getElementById('permitBtn');
-  if(permit){ permitBtn.href = permit; } else { permitBtn.style.display='none'; }
+  for(const [key, id] of Object.entries(map)){
+    if(workerData[key]){
+      document.getElementById(id).textContent = workerData[key];
+    }
+  }
+  
+  // 5. Lógica de Vigencia (valid_from, valid_to)
+  const statusBadge = document.getElementById('statusBadge');
+  const dateBadge = document.getElementById('dateBadge');
+  const now = new Date();
+  const fmt = (d)=> new Intl.DateTimeFormat('es-BO', {dateStyle:'medium', timeStyle: undefined}).format(d);
+  const validFrom = workerData.valid_from;
+  const validTo = workerData.valid_to;
+  
+  if(validFrom || validTo){
+    let fromD = validFrom ? new Date(validFrom) : null;
+    let toD = validTo ? new Date(validTo) : null;
+    let text = '';
 
-  const phone = document.getElementById('phone').textContent.trim();
-  const callBtn = document.getElementById('callBtn');
-  if(phone){ callBtn.href = `tel:${phone.replace(/\s+/g,'')}`; }
+    if(fromD && toD){ text = `${fmt(fromD)} – ${fmt(toD)}`; }
+    else if(fromD){ text = `Desde ${fmt(fromD)}`; }
+    else if(toD){ text = `Hasta ${fmt(toD)}`; }
+    
+    document.getElementById('valid').textContent = text;
 
-  const emergency = get('emergency');
-  const emergencyBtn = document.getElementById('emergencyBtn');
-  if(emergency){ emergencyBtn.href = `tel:${emergency.replace(/\s+/g,'')}`; }
-  else { emergencyBtn.style.display='none'; }
+    const validNow = (!fromD || now>=fromD) && (!toD || now<=toD);
+    statusBadge.textContent = validNow ? 'Credencial válida' : 'VENCIDA';
+    statusBadge.className = 'badge ' + (validNow ? 'ok' : 'warn');
+  } else {
+    // Si no hay fechas definidas, asumimos que está válida
+    statusBadge.textContent = 'Credencial válida';
+    statusBadge.className = 'badge ok';
+    document.getElementById('valid').textContent = 'Permanente';
+  }
 
-  // Status badge logic (valid_from, valid_to)
-  const statusBadge = document.getElementById('statusBadge');
-  const dateBadge = document.getElementById('dateBadge');
-  const now = new Date();
-  const fmt = (d)=> new Intl.DateTimeFormat('es-BO', {dateStyle:'medium', timeStyle: undefined}).format(d);
-  const validFrom = get('valid_from');
-  const validTo = get('valid_to');
-  if(validFrom || validTo){
-    let fromD = validFrom ? new Date(validFrom) : null;
-    let toD = validTo ? new Date(validTo) : null;
-    let text = '';
-    if(fromD && toD){ text = `${fmt(fromD)} – ${fmt(toD)}`; }
-    else if(fromD){ text = `Desde ${fmt(fromD)}`; }
-    else if(toD){ text = `Hasta ${fmt(toD)}`; }
-    if(text){ document.getElementById('valid').textContent = text; }
+  // 6. Propiedades Opcionales
+  const logoEl = document.getElementById('logo');
+  if(workerData.logo){ logoEl.src = workerData.logo; logoEl.style.display='inline'; } else { logoEl.style.display='none'; }
 
-    const validNow = (!fromD || now>=fromD) && (!toD || now<=toD);
-    statusBadge.textContent = validNow ? 'Credencial válida' : 'Fuera de vigencia';
-    statusBadge.className = 'badge ' + (validNow ? 'ok' : 'warn');
-  }
-  // Issue date badge
-  const issued = get('issued');
-  if(issued){ dateBadge.textContent = `Emitida: ${fmt(new Date(issued))}`; }
+  const photoEl = document.getElementById('photo');
+  if(workerData.photo){ photoEl.src = workerData.photo; }
 
-  // Share button
-  const shareBtn = document.getElementById('shareBtn');
-  shareBtn.addEventListener('click', async ()=>{
-    try{
-      if(navigator.share){ await navigator.share({title:document.title, url:location.href}); }
-      else { await navigator.clipboard.writeText(location.href); shareBtn.textContent = 'Copiado al portapapeles'; setTimeout(()=>shareBtn.textContent='🔗 Compartir esta verificación',2000); }
-    }catch(e){ /* ignore */ }
-  });
+  const permitBtn = document.getElementById('permitBtn');
+  if(workerData.permit){ permitBtn.href = workerData.permit; } else { permitBtn.style.display='none'; }
 
-  // Last update time (client side)
-  document.querySelector('#lastUpdate time').textContent = new Intl.DateTimeFormat('es-BO', {dateStyle:'medium', timeStyle:'short'}).format(new Date());
+  const phoneText = workerData.phone?.trim();
+  const callBtn = document.getElementById('callBtn');
+  if(phoneText){ callBtn.href = `tel:${phoneText.replace(/\s+/g,'')}`; } else { callBtn.style.display='none'; }
+
+  const emergencyBtn = document.getElementById('emergencyBtn');
+  if(workerData.emergency){ emergencyBtn.href = `tel:${workerData.emergency.replace(/\s+/g,'')}`; }
+  else { emergencyBtn.style.display='none'; }
+
+  // Issue date badge
+  if(workerData.issued){ dateBadge.textContent = `Emitida: ${fmt(new Date(workerData.issued))}`; } else { dateBadge.style.display='none'; }
+  
+  // 7. Botón Compartir
+  const shareBtn = document.getElementById('shareBtn');
+  shareBtn.addEventListener('click', async ()=>{
+    try{
+      if(navigator.share){ await navigator.share({title:document.title, url:location.href}); }
+      else { await navigator.clipboard.writeText(location.href); shareBtn.textContent = 'Copiado al portapapeles'; setTimeout(()=>shareBtn.textContent='🔗 Compartir esta verificación',2000); }
+    }catch(e){ /* ignore */ }
+  });
+
+  // 8. Hora de última actualización (lado del cliente)
+  document.querySelector('#lastUpdate time').textContent = new Intl.DateTimeFormat('es-BO', {dateStyle:'medium', timeStyle:'short'}).format(new Date());
 })();
 </script>
 </body>
